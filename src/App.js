@@ -19,7 +19,7 @@ function getToken() {
 }
 
 function deleteToken() {
-  localStorage.deleteItem('token');
+  localStorage.removeItem('token');
 }
 
 function createAccountPost(email,
@@ -95,9 +95,7 @@ function loginPost(email, password, callback = ()=>null) {
     method: 'post',
     url: `${backend}/users/login`,
     responseType: 'json',
-    data:   {
-      user: { email, password }
-    }
+    data: { email, password }
   }).then((response) => callback(null, response))
     .catch((error) => callback(error));
 }
