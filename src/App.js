@@ -124,6 +124,22 @@ function getBounces(callback = ()=>null) {
 }
 
 class Bounce extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    
+    // less than a minute old? let's rerender soon
+    console.log(props);
+    console.log(this.props);
+    console.log(new Date() - new Date(this.props.updated_at));
+    if(new Date() - new Date(this.props.updated_at) < 60000) {
+      setTimeout(()=>{
+        this.setState({reload: true});
+      }, 10000);
+    } else {
+      this.state.reload = true;
+    }
+  }
   render() {
     if(this.props.media_type === 'image') {
       return (
@@ -133,13 +149,25 @@ class Bounce extends Component {
         />
       );
     } else {
-      return (
-        <Video cloudName={cloudname}
-        publicId={this.props.bounceid}
-        width={this.props.width}
-        poster={`http://res.cloudinary.com/bouncedotcom-com/video/upload/${this.props.bounceid}.jpg`}
-        controls />
-      );
+      if(this.state.reload) {
+        return (
+          <Video cloudName={cloudname}
+            publicId={this.props.bounceid}
+            width={this.props.width}
+            poster={`http://res.cloudinary.com/bouncedotcom-com/video/upload/${this.props.bounceid}.jpg`}
+            controls />
+        );
+      } else {
+        return (
+          <Image cloudName={cloudname}
+            publicId={this.props.bounceid}
+            width={this.props.width}
+            url={`http://res.cloudinary.com/bouncedotcom-com/video/upload/${this.props.bounceid}.jpg`}
+          />
+        );
+
+      }
+      
     }
   }
 }
@@ -182,9 +210,12 @@ class BounceList extends Component {
   }
 
   renderItem(index, key) {
+    const bounce = this.state.bounces[index];
     return (
-      <div key={this.state.bounces[index].cloudinary_id}>
-        <Bounce width={this.props.width} bounceid={this.state.bounces[index].cloudinary_id}/>
+      <div key={bounce.cloudinary_id}>
+        <Bounce width={this.props.width} bounceid={bounce.cloudinary_id}
+          media_type={bounce.media_type} updated_at={bounce.updated_at}
+        />
       </div>
     );
   }
