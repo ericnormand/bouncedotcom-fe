@@ -317,52 +317,64 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {(()=>{
-           if(!this.state.token) {
-             return (
-               <CreateAccountWidget
-                 onCreate={(e,r)=>{
-                     if(e) {
-                       console.log(e);
-                     } else {
-                       console.log(r);
-                       this.setState({token: r.auth_token});
-                     }
-                   }}
-               />
-             );
-           }
-         })()}
-
-               {(()=>{
-                  if(!this.state.token) {
-                    return (
-                      <LoginWidget
-                        onLogin={(e,r)=>{
-                            if(e) {
-                              console.log(e);
-                            } else {
-                              this.setState({token: r.auth_token});
-                            }
-                          }}
-                      />
-                    );
+      {(()=>{
+        if(!this.state.token) {
+          return (
+            <CreateAccountWidget
+              onCreate={(e,r)=>{
+                  if(e) {
+                    console.log(e);
+                  } else {
+                    console.log(r);
+                    this.setState({token: r.auth_token});
                   }
-                })()}
-                      {(()=> {
-                         if(this.state.token) {
-                           return (
-                             <button onClick={() => {
-                                 this.setState({token:null});
-                                 deleteToken();
-                               }}>Logout</button>
-                           );
-                         }
-                       })()}
-                             <UploadWidget userToken={this.state.token}
-                               onUpload={()=>this.setState({updateTime:new Date().getTime()})}/>
+                }}
+            />
+          );
+        }
+      })()}
 
-                             <BounceList width={this.state.width} updateTime={this.state.updateTime}/>
+      {(()=>{
+        if(!this.state.token) {
+          return (
+            <LoginWidget
+              onLogin={(e,r)=>{
+                  if(e) {
+                    console.log(e);
+                  } else {
+                    this.setState({token: r.auth_token});
+                  }
+                }}
+            />
+          );
+        }
+      })()}
+      {(()=> {
+        if(this.state.token) {
+          return (
+            <button onClick={() => {
+                this.setState({token:null});
+                deleteToken();
+              }}>Logout</button>
+          );
+        }
+      })()}
+
+
+      {(()=>{
+        if(this.state.token) {
+          return (
+            <UploadWidget userToken={this.state.token}
+              onUpload={()=>this.setState({updateTime:new Date().getTime()})}/>
+          );
+        } else {
+          return (
+            <div>Please create an account or log in to upload.</div>
+          )
+        }
+      })()}
+
+      <BounceList width={this.state.width} updateTime={this.state.updateTime}/>
       </div>
     );
   }
