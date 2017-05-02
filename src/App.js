@@ -125,13 +125,22 @@ function getBounces(callback = ()=>null) {
 
 class Bounce extends Component {
   render() {
-    return (
-      <Video cloudName={cloudname}
-      publicId={this.props.bounceid}
-      width={this.props.width}
-      poster={`http://res.cloudinary.com/bouncedotcom-com/video/upload/${this.props.bounceid}.jpg`}
-      controls />
-    );
+    if(this.props.media_type === 'image') {
+      return (
+        <Image cloudName={cloudname}
+        publicId={this.props.bounceid}
+        width={this.props.width}
+        />
+      );
+    } else {
+      return (
+        <Video cloudName={cloudname}
+        publicId={this.props.bounceid}
+        width={this.props.width}
+        poster={`http://res.cloudinary.com/bouncedotcom-com/video/upload/${this.props.bounceid}.jpg`}
+        controls />
+      );
+    }
   }
 }
 
@@ -238,7 +247,7 @@ class LoginWidget extends Component {
   }
 }
 
-function createBounce(token, user_id, cloudinary_id, title, callback = ()=>null) {
+function createBounce(token, user_id, cloudinary_id, title, media_type, callback = ()=>null) {
   axios({
     url: `${backend}/bounces`,
     method: 'post',
@@ -247,16 +256,18 @@ function createBounce(token, user_id, cloudinary_id, title, callback = ()=>null)
       Authorization: token
     },
     data: {
-      user_id, cloudinary_id, title
+      user_id, cloudinary_id, title, media_type
     }
   }).then((response) => callback(null, response))
     .catch((error) => callback(error));
 }
 
 function showUploadWidget(cb = function(){}) {
-  window.cloudinary.openUploadWidget({ cloud_name: cloudname,
-                                       upload_preset: 'default',
-                                       tags:['xmas']},
+  window.cloudinary.openUploadWidget({
+    cloud_name: cloudname,
+    upload_preset: 'default',
+    tags:['bounce']
+  },
                                      cb);
 }
 
@@ -269,26 +280,31 @@ function userIdFromToken(token) {
 
 class UploadWidget extends Component {
 
-  show() {
+  upload() {
     showUploadWidget((error, result) => {
       if(error) {
         console.log(error);
         return;
       }
-      createBounce(this.props.userToken,
-                   userIdFromToken(this.props.userToken),
-                   result[0].public_id, 'My Bounce',
-                   (err, result) => {
-                     if(this.props.onUpload)
-                       this.props.onUpload(err, result);
-                   });
+      result.forEach((thing) => {
+        console.log(thing);
+        createBounce(this.props.userToken,
+                     userIdFromToken(this.props.userToken),
+                     thing.public_id,
+                     'My Bounce',
+                     thing.resource_type,
+                     (err, result) => {
+                       if(this.props.onUpload)
+                         this.props.onUpload(err, result);
+                     });
+      });
     });
   }
 
   render() {
     return (
       <div>
-        <button onClick={this.show.bind(this)}>Upload</button>
+        <button onClick={this.upload.bind(this)}>Upload</button>
       </div>
     );
   }
