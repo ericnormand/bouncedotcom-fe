@@ -194,7 +194,7 @@ class BounceList extends Component {
       <ReactList
       itemRenderer={this.renderItem.bind(this)}
       length={this.state.bounces.length}
-      type="uniform"
+      type="variable"
       threshold={0}
 
       />
