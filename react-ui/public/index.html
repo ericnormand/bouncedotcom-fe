@@ -20,6 +20,9 @@
     <meta property="og:title"              content="{{title}}" />
     <meta property="og:description"        content="{{description}}" />
     <meta property="og:image" content="{{&image}}" />
+    {{#video}}
+    <meta property="og:video" content="{{&video}}" />
+    {{/video}}
   </head>
   <body>
     <div id="root"></div>
