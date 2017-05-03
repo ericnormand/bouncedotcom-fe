@@ -47,6 +47,7 @@ class App extends Component {
       loading: false,
       bounces: [],
       currentPage: 1,
+      updateBounces: false,
     };
   }
 
@@ -68,7 +69,10 @@ class App extends Component {
 
   componentWillUpdate(nextProps, nextState) {
     if ((this.state.bounces[0] && nextState.bounces[0] && this.state.bounces[0].id !== nextState.bounces[0].id) ||
-      this.state.currentPage !== nextState.currentPage) {
+      this.state.currentPage !== nextState.currentPage ||
+      nextState.updateBounces) {
+
+      this.setState({updateBounces: false})
       this.fetchBounces(nextState)
     }
   }
@@ -111,7 +115,11 @@ class App extends Component {
         <UploadWidget
           cloudname={cloudname}
           userToken={this.state.token}
-          onUpload={() => this.setState({updateTime: new Date().getTime()})}
+          onUpload={() => this.setState({
+            updateTime: new Date().getTime(),
+            updateBounces: true,
+            currentPage: 1,
+          })}
         />
       );
     } else {
