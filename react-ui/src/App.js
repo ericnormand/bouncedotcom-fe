@@ -282,17 +282,27 @@ class App extends Component {
     }
   }
 
+  me() {
+    const userid = this.state.token && userIdFromToken(this.state.token);
+    if(userid) {
+      return (
+        <div style={{position:'fixed', bottom: 0, left: 0, fontSize:75}}>
+          <a href={`/twerker/${userid}`}>ME</a>
+        </div>
+      );
+    }
+    return null;
+
+  }
+
   render() {
-    const userid = userIdFromToken(this.state.token);
     return (
       <div className="App">
         <div>
           Bounce DOT COM .com
         </div>
         {this.choose()}
-        <div style={{position:'fixed', bottom: 0, left: 0, fontSize:75}}>
-          <a href={`/twerker/${userid}`}>ME</a>
-        </div>
+        {this.me()}
         <div style={{position:'fixed', bottom: 0, right: 0}}>
           {this.uploadWidget()}
         </div>
