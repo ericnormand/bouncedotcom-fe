@@ -19,7 +19,7 @@ export default class BounceList extends Component {
     if (this.props.paging === false) {
       return null
     } else if (this.props.currentPage === 1) {
-      return "Prev"
+      return null
     } else {
       return <button onClick={() => { this.props.modifyPage(this.props.currentPage - 1) }}>Prev</button>
     }
@@ -29,7 +29,7 @@ export default class BounceList extends Component {
     if (this.props.paging === false) {
       return null
     } else if (this.props.bounces.length < 15) {
-      return "Next"
+      return null;
     } else {
       return <button onClick={() => { this.props.modifyPage(this.props.currentPage + 1) }}>Next</button>
     }
@@ -62,16 +62,20 @@ export default class BounceList extends Component {
 
   render() {
     return (
-      <div className="bounce-list">
-        {this.loading()}
-        {this.prevPage()}
-        <ReactList
-          itemRenderer={this.renderItem.bind(this)}
-          length={this.props.bounces.length}
-          type="variable"
-          threshold={0}
-        />
-        {this.nextPage()}
+      <div>
+        <div className="bounce-list">
+          {this.loading()}
+          {this.prevPage()}
+          <ReactList
+            itemRenderer={this.renderItem.bind(this)}
+            length={this.props.bounces.length}
+            type="variable"
+            threshold={0}
+          />
+        </div>
+        <div style={{marginBottom: 220}}>
+          {this.nextPage()}
+        </div>
       </div>
     );
   }

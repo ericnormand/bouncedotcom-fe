@@ -67,6 +67,7 @@ export default class Profile extends Component {
           cloudName={this.props.cloudname}
           publicId={cloudid}
           width={this.props.pic_width}
+          style={{maxWidth:'100%'}}
         />
       );
     } else {
@@ -98,7 +99,7 @@ export default class Profile extends Component {
     return (
       <div>
         {this.media(cloudid, mediatype)}
-        <div>
+        <div className="link-container">
           {this.replaceButton()}
           <FacebookProvider appId="454994558177557">
             <Like href={`http://www.bouncedotcom.com/twerker/${this.props.userid}`} colorScheme="dark"

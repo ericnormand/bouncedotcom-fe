@@ -84,7 +84,8 @@ h1 {
 }
 
 .bounce-list {
-  /*padding: 0 30px;*/
+    /*padding: 0 30px;*/
+    margin-bottom: 60px;
 }
 
 .media-container {
@@ -101,7 +102,8 @@ h1 {
 }
 
 .link-container {
-  margin: 8px 0;
+    margin: 8px 0;
+    height: 4em;
 }
 
 .user-link,
@@ -112,6 +114,7 @@ h1 {
   font-size: 12px;
   line-height: 14px;
   padding: 5px;
+  margin-bottom: 14px;
 }
 
 .page-link {
