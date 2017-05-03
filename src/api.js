@@ -55,7 +55,7 @@ export function createBounce(token, user_id, cloudinary_id, title, media_type, c
       Authorization: token
     },
     data: {
-      user_id, cloudinary_id, title, media_type
+      user_id, cloudinary_id, title, media_type,
     }
   }).then((response) => callback(null, response))
     .catch((error) => callback(error));

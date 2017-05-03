@@ -69,47 +69,40 @@ class App extends Component {
     }
   }
 
+  get logout() {
+    if (this.state.token) {
+      return (
+        <button
+          onClick={() => {
+            this.setState({token: null});
+            deleteToken();
+          }}
+        >Logout</button>
+      );
+    }
+  }
+
+  get accountWidget() {
+    if (!this.state.token) {
+      return (
+        <CreateAccountWidget />
+      );
+    }
+  }
+
   render() {
     return (
       <div className="App">
-      {(()=>{
-        if(!this.state.token) {
-          return (
-            <CreateAccountWidget
-              onCreate={(e,r)=>{
-                  if(e) {
-                    console.log(e);
-                  } else {
-                    console.log(r);
-                    this.setState({token: r.auth_token});
-                  }
-                }}
-            />
-          );
-        }
-      })()}
+        {this.accountWidget}
+        {this.loginWidget}
+        {this.logout}
+        {this.uploadWidget}
 
-      {this.loginWidget}
-
-      {(()=> {
-        if(this.state.token) {
-          return (
-            <button onClick={() => {
-                this.setState({token:null});
-                deleteToken();
-              }}>Logout</button>
-          );
-        }
-      })()}
-
-
-      {this.uploadWidget}
-
-      <BounceList
-        width={this.state.width}
-        updateTime={this.state.updateTime}
-        cloudname={cloudname}
-      />
+        <BounceList
+          width={this.state.width}
+          updateTime={this.state.updateTime}
+          cloudname={cloudname}
+        />
       </div>
     );
   }

@@ -16,6 +16,14 @@ export default class CreateAccountWidget extends Component {
     };
   }
 
+  onCreate(err, resp) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(resp);
+      this.setState({token: resp.auth_token});
+    }
+  }
 
   handleCreateAccount(email, password, password_confirmation, callback = () => null) {
     createAccountPost(email, password, password_confirmation,
@@ -33,7 +41,7 @@ export default class CreateAccountWidget extends Component {
     this.handleCreateAccount(this.state.email,
                              this.state.password,
                              this.state.password_confirmation,
-                             this.props.onCreate);
+                             this.onCreate);
   }
 
   render() {
