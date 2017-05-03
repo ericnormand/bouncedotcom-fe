@@ -14,7 +14,7 @@ export default class UploadWidget extends Component {
       cloud_name: this.props.cloudname,
       upload_preset: 'default',
       tags: ['bounce'],
-      theme: 'minimal',
+      theme: 'purple',
       max_file_size: 25000000
     },
     cb);
