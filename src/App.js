@@ -20,7 +20,7 @@ function deleteToken() {
   localStorage.removeItem('token');
 }
 
-function ensureToken(callback = ()=>null) {
+function ensureToken(callback = () => null) {
   const existingToken = getToken();
   if(!existingToken) {
     // fake email + password
@@ -120,7 +120,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div >
+        <div>
           Bounce DOT COM .com
         </div>
         <BounceList
