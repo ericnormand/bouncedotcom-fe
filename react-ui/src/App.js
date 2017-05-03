@@ -170,26 +170,6 @@ class App extends Component {
     return null
   }
 
-  uploadWidget() {
-    if (this.state.token) {
-      return (
-        <UploadWidget
-          cloudname={cloudname}
-          userToken={this.state.token}
-          onUpload={() => this.setState({
-              updateTime: new Date().getTime(),
-              updateBounces: true,
-              currentPage: 1,
-            })}
-        />
-      );
-    } else {
-      return (
-        <div>Please create an account or log in to upload.</div>
-      )
-    }
-  }
-
   logout() {
     if (this.state.token) {
       return (
@@ -293,6 +273,26 @@ class App extends Component {
 
   }
 
+  uploadWidget() {
+    if (this.state.token) {
+      return (
+        <UploadWidget
+          cloudname={cloudname}
+          userToken={this.state.token}
+          onUpload={() => this.setState({
+              updateTime: new Date().getTime(),
+              updateBounces: true,
+              currentPage: 1,
+            })}
+        />
+      );
+    } else {
+      return (
+        <div>Please create an account or log in to upload.</div>
+      )
+    }
+  }
+
   render() {
     return (
       <div className="App">
@@ -301,9 +301,7 @@ class App extends Component {
           {this.profileIcon()}
         </header>
         {this.choose()}
-        <div style={{position:'fixed', bottom: 0, right: 0}}>
-          {this.uploadWidget()}
-        </div>
+        {this.uploadWidget()}
       </div>
     );
   }

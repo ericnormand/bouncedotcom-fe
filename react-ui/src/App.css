@@ -1,8 +1,11 @@
+html {
+  color: #fff;
+}
+
 .App {
   text-align: center;
   font-family: 'Helvetica Neue';
   background-color: #300555;
-  color: #fff;
 }
 
 .App-logo {
@@ -14,7 +17,6 @@
   background-color: #222;
   height: 150px;
   padding: 20px;
-  color: white;
 }
 
 .App-intro {
@@ -54,4 +56,23 @@ h1 {
   position: absolute;
   top: 14px;
   right: 12px;
+}
+
+.upload-btn {
+  width: 80%;
+  height: 4em;
+  position: fixed;
+  bottom: 15px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-color: #6A0DB9;
+  box-shadow: 0 8px 16px 0 rgba(106,13,185,0.50);
+  border: none;
+  border-radius: 8px;
+  font-family: HelveticaNeue;
+  font-size: 18px;
+  line-height: 20px;
+  letter-spacing: .65px;
+  color: #fff;
 }
