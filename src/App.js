@@ -50,7 +50,6 @@ class App extends Component {
       bounceCount: 0,
     };
 
-
     setInterval(() => {
       console.log('updating');
       this.setState({updateTime: new Date().getTime()});
@@ -62,7 +61,6 @@ class App extends Component {
   }
 
   componentWillMount() {
-
     ensureToken((err, token) => {
       if(err) {
         console.log(err);
@@ -70,7 +68,6 @@ class App extends Component {
         this.setState({token});
       }
     });
-
   }
 
   loginWidget() {
@@ -96,7 +93,8 @@ class App extends Component {
         <UploadWidget
           cloudname={cloudname}
           userToken={this.state.token}
-          onUpload={() => this.setState({updateTime: new Date().getTime()})}/>
+          onUpload={() => this.setState({updateTime: new Date().getTime()})}
+        />
       );
     } else {
       return (

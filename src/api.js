@@ -24,12 +24,14 @@ export function getUserInfo(token, callback = () => null) {
 }
 
 export function createAccountPost(email, password, password_confirmation, callback = () => null) {
+  const payload = {email, password, password_confirmation}
+
   axios({
     method: 'post',
     url: `${backend}/users`,
     responseType: 'json',
     data: {
-      user: {email, password, password_confirmation},
+      user: {email, password, password_confirmation, payload},
     },
   }).then((response) => callback(null, response))
     .catch((error) => callback(error));
@@ -50,7 +52,6 @@ export function getBounces(page, callback = () => null) {
     method: 'get',
     url: `${backend}/bounces?page=${page}`,
   }).then((resp) => {
-    console.log(resp);
     callback(null, resp);
   }).catch((err) => {
     callback(err)
@@ -58,6 +59,8 @@ export function getBounces(page, callback = () => null) {
 }
 
 export function createBounce(token, user_id, cloudinary_id, title, media_type, callback = ()=>null) {
+  const payload = {token, user_id, cloudinary_id, title, media_type}
+
   axios({
     url: `${backend}/bounces`,
     method: 'post',
@@ -66,7 +69,7 @@ export function createBounce(token, user_id, cloudinary_id, title, media_type, c
       Authorization: token
     },
     data: {
-      user_id, cloudinary_id, title, media_type,
+      user_id, cloudinary_id, title, media_type, payload,
     }
   }).then((response) => callback(null, response))
     .catch((error) => callback(error));

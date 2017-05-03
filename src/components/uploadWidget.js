@@ -25,7 +25,6 @@ export default class UploadWidget extends Component {
         return;
       }
       result.forEach((thing) => {
-        console.log(thing);
         createBounce(
           this.props.userToken,
           userIdFromToken(this.props.userToken),
