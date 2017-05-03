@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const backend = 'http://localhost:3001';// 'https://bouncedotcom-backend.herokuapp.com';
+const backend = 'https://bouncedotcom-backend.herokuapp.com'; //'http://localhost:3001';// 
 
 export function saveToken(token) {
   localStorage.setItem('token', token);
