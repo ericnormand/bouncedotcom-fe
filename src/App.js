@@ -11,8 +11,6 @@ import UploadWidget from './components/uploadWidget'
 import {createAccountPost, saveToken, getBounces} from './api'
 import Profile from './components/profile'
 
-import {createAccountPost, saveToken} from './api'
-
 const cloudname = 'bouncedotcom-com';
 
 function getToken() {
