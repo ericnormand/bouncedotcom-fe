@@ -8,6 +8,8 @@ import CreateAccountWidget from './components/createAccountWidget'
 import BounceList from './components/bounceList'
 import UploadWidget from './components/uploadWidget'
 
+import {createAccountPost, saveToken} from './api'
+
 const cloudname = 'bouncedotcom-com';
 
 function getToken() {
@@ -16,6 +18,23 @@ function getToken() {
 
 function deleteToken() {
   localStorage.removeItem('token');
+}
+
+function ensureToken(callback = () => null) {
+  const existingToken = getToken();
+  if(!existingToken) {
+    // fake email + password
+    createAccountPost("", "", "", (err, resp) => {
+      if (err) {
+        callback(err);
+      } else {
+        saveToken(resp.data.auth_token);
+        callback(null, resp.data.auth_token);
+      }
+    });
+  } else {
+    callback(null, existingToken);
+  }
 }
 
 class App extends Component {
@@ -28,6 +47,14 @@ class App extends Component {
       currentPage: 1,
       bounceCount: 0,
     };
+
+    ensureToken((err, token) => {
+      if(err) {
+        console.log(err);
+      } else {
+        this.setState({token});
+      }
+    });
 
     setInterval(() => {
       console.log('updating');
@@ -44,12 +71,12 @@ class App extends Component {
       return (
         <LoginWidget
           onLogin={(err, resp) => {
-            if (err) {
-              console.log(err);
-            } else {
-              this.setState({token: resp.auth_token});
-            }
-          }}
+              if (err) {
+                console.log(err);
+              } else {
+                this.setState({token: resp.auth_token});
+              }
+            }}
         />
       );
     }
@@ -76,9 +103,9 @@ class App extends Component {
       return (
         <button
           onClick={() => {
-            this.setState({token: null});
-            deleteToken();
-          }}
+              this.setState({token: null});
+              deleteToken();
+            }}
         >Logout</button>
       );
     }
@@ -115,13 +142,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.accountWidget()}
-        {this.loginWidget()}
-        {this.logout()}
-        {this.uploadWidget()}
-
+        <div>
+          Bounce DOT COM .com
+        </div>
         {this.prevPage()}
-
         <BounceList
           width={this.state.width}
           updateTime={this.state.updateTime}
@@ -129,8 +153,10 @@ class App extends Component {
           page={this.state.currentPage}
           onFetch={(c) => {this.updateBounceCount(c)}}
         />
-
         {this.nextPage()}
+        <div style={{position:'fixed', bottom: 0, right: 0}}>
+          {this.uploadWidget()}
+        </div>
       </div>
     );
   }
