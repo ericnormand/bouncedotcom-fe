@@ -71,13 +71,7 @@ export default class Profile extends Component {
       );
     } else {
       return (
-        <Video
-          cloudName={this.props.cloudname}
-          publicId={cloudid}
-          width={this.props.width}
-          poster={`http://res.cloudinary.com/bouncedotcom-com/video/upload/${cloudid}.jpg`}
-          autoPlay
-        />
+        <img src={`http://res.cloudinary.com/bouncedotcom-com/video/upload/${cloudid}.gif`} />
       );
     }
   }
