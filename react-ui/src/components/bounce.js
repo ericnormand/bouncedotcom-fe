@@ -36,6 +36,7 @@ export default class Bounce extends Component {
           width={this.props.width}
           poster={`http://res.cloudinary.com/bouncedotcom-com/video/upload/${this.props.cloudinary}.jpg`}
           controls
+          onClick={(e)=>e.target.play()}
         />
       );
     }
