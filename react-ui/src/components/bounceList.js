@@ -31,7 +31,8 @@ export default class BounceList extends Component {
     } else if (this.props.bounces.length < 15) {
       return null;
     } else {
-      return <button onClick={() => { this.props.modifyPage(this.props.currentPage + 1) }}>Next</button>
+      return <button className="next-btn btn-default-styles btn-outline" onClick={() =>
+        { this.props.modifyPage(this.props.currentPage + 1) }}>Next video</button>
     }
   }
 

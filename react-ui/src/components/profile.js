@@ -52,9 +52,9 @@ export default class Profile extends Component {
   noPic() {
     if(this.itsMe()) {
       return (
-        <button style={{fontSize:75}}
-          onClick={this.upload.bind(this)}
-        >Take Profile Pic/Vid</button>
+        <button
+          className="btn-default-styles btn-outline"
+          onClick={this.upload.bind(this)}>Take Profile Pic/Vid</button>
       );
     }
     return <div>NO PROFILE PIC/VID</div>;

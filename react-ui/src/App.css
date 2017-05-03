@@ -117,6 +117,29 @@ h1 {
   margin-bottom: 14px;
 }
 
-.page-link {
+.btn-default-styles {
+  width: 80%;
+  height: 4em;
+  border: none;
+  border-radius: 8px;
+  font-family: HelveticaNeue;
+  font-size: 18px;
+  line-height: 20px;
+  letter-spacing: .65px;
+  color: #fff;
+  margin: auto;
+}
 
+.btn-outline {
+  background: none;
+  border: 1px solid #6A0DB9;
+}
+
+.upload-btn {
+  position: fixed;
+  bottom: 15px;
+  left: 0;
+  right: 0;
+  background-color: #6A0DB9;
+  box-shadow: 0 8px 16px 0 rgba(106,13,185,0.50);
 }
