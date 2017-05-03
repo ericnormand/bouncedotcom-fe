@@ -24,7 +24,9 @@ class App extends Component {
     this.state = {
       token: getToken(),
       updateTime: new Date().getTime(),
-      width: Math.min(window.innerWidth, 800)
+      width: Math.min(window.innerWidth, 800),
+      currentPage: 1,
+      bounceCount: 0,
     };
 
     setInterval(() => {
@@ -37,7 +39,7 @@ class App extends Component {
     }
   }
 
-  get loginWidget() {
+  loginWidget() {
     if (!this.state.token) {
       return (
         <LoginWidget
@@ -54,7 +56,7 @@ class App extends Component {
     return null
   }
 
-  get uploadWidget() {
+  uploadWidget() {
     if (this.state.token) {
       return (
         <UploadWidget
@@ -69,7 +71,7 @@ class App extends Component {
     }
   }
 
-  get logout() {
+  logout() {
     if (this.state.token) {
       return (
         <button
@@ -82,7 +84,7 @@ class App extends Component {
     }
   }
 
-  get accountWidget() {
+  accountWidget() {
     if (!this.state.token) {
       return (
         <CreateAccountWidget />
@@ -90,19 +92,45 @@ class App extends Component {
     }
   }
 
+  prevPage() {
+    if (this.state.currentPage === 1) {
+      return "Prev"
+    } else {
+      return <button onClick={() => {this.setState({currentPage: this.state.currentPage - 1})}}>Prev</button>
+    }
+  }
+
+  nextPage() {
+    if (this.state.bounceCount < 15) {
+      return "Next"
+    } else {
+      return <button onClick={() => {this.setState({currentPage: this.state.currentPage + 1})}}>Next</button>
+    }
+  }
+
+  updateBounceCount(bounceCount) {
+    this.setState({bounceCount})
+  }
+
   render() {
     return (
       <div className="App">
-        {this.accountWidget}
-        {this.loginWidget}
-        {this.logout}
-        {this.uploadWidget}
+        {this.accountWidget()}
+        {this.loginWidget()}
+        {this.logout()}
+        {this.uploadWidget()}
+
+        {this.prevPage()}
 
         <BounceList
           width={this.state.width}
           updateTime={this.state.updateTime}
           cloudname={cloudname}
+          page={this.state.currentPage}
+          onFetch={(c) => {this.updateBounceCount(c)}}
         />
+
+        {this.nextPage()}
       </div>
     );
   }
