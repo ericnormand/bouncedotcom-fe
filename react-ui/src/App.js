@@ -56,10 +56,11 @@ class App extends Component {
     window.onresize = () => {
       this.setState({width: Math.min(window.innerWidth, 800)});
     }
-
+    
     ensureToken((err, token) => {
       if(err) {
         console.log(err);
+        this.setState({error: err});
       } else {
         this.setState({token});
       }
@@ -161,6 +162,7 @@ class App extends Component {
         <div>
           Bounce DOT COM .com
         </div>
+        {`${this.state.error}`}
         {/*<Profile token={this.state.token} cloudname={cloudname} />*/}
         <BounceList
           width={this.state.width}
