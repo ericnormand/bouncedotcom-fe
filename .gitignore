@@ -18,3 +18,4 @@ yarn-error.log*
 
 /react-ui/node_modules
 /react-ui/build
+/react-ui/views
