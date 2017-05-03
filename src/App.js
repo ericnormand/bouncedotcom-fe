@@ -46,13 +46,6 @@ class App extends Component {
       width: Math.min(window.innerWidth, 800)
     };
 
-    ensureToken((err, token) => {
-      if(err) {
-        console.log(err);
-      } else {
-        this.setState({token});
-      }
-    });
 
     setInterval(() => {
       console.log('updating');
@@ -62,6 +55,18 @@ class App extends Component {
     window.onresize = () => {
       this.setState({width: Math.min(window.innerWidth, 800)});
     }
+  }
+
+  componentWillMount() {
+
+    ensureToken((err, token) => {
+      if(err) {
+        console.log(err);
+      } else {
+        this.setState({token});
+      }
+    });
+
   }
 
   get loginWidget() {

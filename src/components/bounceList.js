@@ -34,8 +34,9 @@ export default class BounceList extends Component {
       if (err) {
         console.log('error', err);
       } else {
+        console.log(resp);
         this.setState({
-          bounces: resp.data,
+          bounces: resp.data.bounces,
           loading: false,
         });
       }
@@ -44,13 +45,14 @@ export default class BounceList extends Component {
 
   renderItem(index, _key) {
     const bounce = this.state.bounces[index];
-
+    console.log(bounce);
     return (
       <div key={bounce.cloudinary_id}>
         <Bounce
           width={this.props.width}
           bounceid={bounce.cloudinary_id}
-          media_type={bounce.media_type} updated_at={bounce.updated_at}
+          media_type={bounce.media_type}
+          updated_at={bounce.updated_at}
           cloudname={this.props.cloudname}
         />
       </div>
