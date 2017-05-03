@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types';
 import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 
+import FacebookProvider, { Like } from 'react-facebook';
+
 export default class Bounce extends Component {
   static propTypes = {
     media_type: PropTypes.string,
@@ -16,7 +18,7 @@ export default class Bounce extends Component {
     this.state = {};
   }
 
-  render() {
+  comp() {
     if (this.props.media_type === 'image') {
       return (
         <Image
@@ -36,5 +38,17 @@ export default class Bounce extends Component {
         />
       );
     }
+  }
+
+  render() {
+    return (
+      <div>
+        {this.comp()}
+        <a href={`http://www.bouncedotcom.com/bounce/${this.props.bounceid}`}>LINK</a>
+        <FacebookProvider appId="454994558177557">
+          <Like href={`http://www.bouncedotcom.com/bounce/${this.props.bounceid}`} colorScheme="dark" showFaces share />
+        </FacebookProvider>
+      </div>
+    );
   }
 }

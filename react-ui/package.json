@@ -17,6 +17,7 @@
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-facebook": "^4.0.8",
     "react-list": "^0.8.5",
     "tap": "^10.3.2"
   },
