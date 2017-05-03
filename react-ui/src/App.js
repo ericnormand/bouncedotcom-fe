@@ -282,13 +282,11 @@ class App extends Component {
     }
   }
 
-  me() {
+  profileIcon() {
     const userid = this.state.token && userIdFromToken(this.state.token);
     if(userid) {
       return (
-        <div style={{position:'fixed', bottom: 0, left: 0, fontSize:75}}>
-          <a href={`/twerker/${userid}`}>ME</a>
-        </div>
+        <a className="user-icon" href={`/twerker/${userid}`}></a>
       );
     }
     return null;
@@ -298,11 +296,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div>
+        <header>
           <h1>BounceDOTCOM.com</h1>
-        </div>
+          {this.profileIcon()}
+        </header>
         {this.choose()}
-        {this.me()}
         <div style={{position:'fixed', bottom: 0, right: 0}}>
           {this.uploadWidget()}
         </div>
