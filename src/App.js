@@ -43,7 +43,9 @@ class App extends Component {
     this.state = {
       token: getToken(),
       updateTime: new Date().getTime(),
-      width: Math.min(window.innerWidth, 800)
+      width: Math.min(window.innerWidth, 800),
+      currentPage: 1,
+      bounceCount: 0,
     };
 
 
@@ -69,7 +71,7 @@ class App extends Component {
 
   }
 
-  get loginWidget() {
+  loginWidget() {
     if (!this.state.token) {
       return (
         <LoginWidget
@@ -101,7 +103,7 @@ class App extends Component {
     }
   }
 
-  get logout() {
+  logout() {
     if (this.state.token) {
       return (
         <button
@@ -114,12 +116,32 @@ class App extends Component {
     }
   }
 
-  get accountWidget() {
+  accountWidget() {
     if (!this.state.token) {
       return (
         <CreateAccountWidget />
       );
     }
+  }
+
+  prevPage() {
+    if (this.state.currentPage === 1) {
+      return "Prev"
+    } else {
+      return <button onClick={() => {this.setState({currentPage: this.state.currentPage - 1})}}>Prev</button>
+    }
+  }
+
+  nextPage() {
+    if (this.state.bounceCount < 15) {
+      return "Next"
+    } else {
+      return <button onClick={() => {this.setState({currentPage: this.state.currentPage + 1})}}>Next</button>
+    }
+  }
+
+  updateBounceCount(bounceCount) {
+    this.setState({bounceCount})
   }
 
   render() {
@@ -128,11 +150,15 @@ class App extends Component {
         <div>
           Bounce DOT COM .com
         </div>
+        {this.prevPage()}
         <BounceList
           width={this.state.width}
           updateTime={this.state.updateTime}
           cloudname={cloudname}
+          page={this.state.currentPage}
+          onFetch={(c) => {this.updateBounceCount(c)}}
         />
+        {this.nextPage()}
         <div style={{position:'fixed', bottom: 0, right: 0}}>
           {this.uploadWidget()}
         </div>

@@ -9,6 +9,8 @@ export default class BounceList extends Component {
   static propTypes = {
     width: PropTypes.number,
     cloudname: PropTypes.string,
+    page: PropTypes.number,
+    onFetch: PropTypes.func,
   }
 
   constructor(props) {
@@ -21,24 +23,27 @@ export default class BounceList extends Component {
   }
 
   componentWillMount() {
-    this.fetchBounces()
+    this.fetchBounces(this.props.page)
   }
 
-  componentWillReceiveProps() {
-    this.fetchBounces()
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.page !== this.props.page) {
+      this.fetchBounces(nextProps.page)
+    }
   }
 
-  fetchBounces() {
+  fetchBounces(page) {
     this.setState({loading: true});
-    getBounces((err, resp) => {
+    getBounces(page, (err, resp) => {
       if (err) {
         console.log('error', err);
       } else {
         console.log(resp);
         this.setState({
-          bounces: resp.data.bounces,
+          ...resp.data,
           loading: false,
         });
+        this.props.onFetch(this.state.bounces.length)
       }
     });
   }
