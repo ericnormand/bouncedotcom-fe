@@ -16,10 +16,9 @@ export default class BounceList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bounces: [],
-      loading: true,
+      bounces: {},
+      loading: false,
     };
-
   }
 
   componentWillMount() {
@@ -27,15 +26,17 @@ export default class BounceList extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.page !== this.props.page) {
-      this.fetchBounces(nextProps.page)
-    }
+    // we need to fetch new bounces immediately after uploading
+    //if (nextProps.page !== this.props.page) {
+    this.fetchBounces(nextProps.page)
+    //}
   }
 
   fetchBounces(page) {
     this.setState({loading: true});
     getBounces(page, (err, resp) => {
       if (err) {
+        this.setState({loading:false});
         console.log('error', err);
       } else {
         this.setState({
@@ -49,13 +50,13 @@ export default class BounceList extends Component {
 
   renderItem(index, _key) {
     const bounce = this.state.bounces[index];
-
     return (
       <div key={bounce.cloudinary_id}>
         <Bounce
           width={this.props.width}
           bounceid={bounce.cloudinary_id}
-          media_type={bounce.media_type} updated_at={bounce.updated_at}
+          media_type={bounce.media_type}
+          updated_at={bounce.updated_at}
           cloudname={this.props.cloudname}
         />
       </div>
