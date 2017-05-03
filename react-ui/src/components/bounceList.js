@@ -32,14 +32,17 @@ export default class BounceList extends Component {
 
   renderItem(index, _key) {
     const bounce = this.props.bounces[index];
+    console.log(bounce);
     return (
-      <div key={bounce.cloudinary_id}>
+      <div key={bounce.id}>
         <Bounce
           width={this.props.width}
-          bounceid={bounce.cloudinary_id}
+          bounceid={bounce.id}
+          cloudinary={bounce.cloudinary_id}
           media_type={bounce.media_type}
           updated_at={bounce.updated_at}
           cloudname={this.props.cloudname}
+          userid={bounce.user_id}
         />
       </div>
     );

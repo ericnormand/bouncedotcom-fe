@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types';
 import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
-import {getUserInfo} from '../api.js';
+import {getUserInfo, userIdFromToken, patchUser} from '../api.js';
 
+import BounceList from './bounceList';
 
+import FacebookProvider, { Like } from 'react-facebook';
 
 export default class Profile extends Component {
 
@@ -11,17 +13,6 @@ export default class Profile extends Component {
     super(props);
     this.state = {};
 
-  }
-
-  componentWillMount() {
-    getUserInfo(this.props.token, (err, resp) => {
-      if(err) {
-        console.log(err);
-      } else {
-        console.log(resp);
-        this.setState(resp);
-      }
-    });
   }
 
   showUploadWidget(cb = () => {}) {
@@ -38,30 +29,39 @@ export default class Profile extends Component {
       if (error) {
         console.log(error);
         return;
+      } else {
+        if(result && result.length>0) {
+          console.log(result);
+          patchUser(this.props.userid, {
+            payload: Object.assign({}, this.props.payload, {
+              profile_pic_id: result[0].public_id,
+              profile_pic_type: result[0].resource_type
+            })
+          }, this.props.onUpload);
+        }
+
       }
     });
   }
 
-  noPic() {
-    return (
-      <span style={{fontSize:75}}
-      onClick={this.upload.bind(this)}
-      >+</span>
-    );
+  itsMe() {
+    return this.props.token &&
+           this.props.userid === ''+ userIdFromToken(this.props.token);
   }
 
-  profilePic() {
-    if(!this.state.payload) {
-      return this.noPic();
-    }
-    const cloudid = this.props.payload.profile_pic_id;
-    const mediatype = this.props.payload.profile_pic_type;
-    const width = this.props.payload.profile_pic_width;
-    if(!cloudid) {
+  noPic() {
+    if(this.itsMe()) {
       return (
-        this.noPic()
+        <button style={{fontSize:75}}
+          onClick={this.upload.bind(this)}
+        >Take Profile Pic/Vid</button>
       );
-    } else if(mediatype === 'image') {
+    }
+    return <div>NO PROFILE PIC/VID</div>;
+  }
+
+  media(cloudid, mediatype) {
+    if(mediatype === 'image') {
       return (
         <Image
           cloudName={this.props.cloudname}
@@ -74,7 +74,7 @@ export default class Profile extends Component {
         <Video
           cloudName={this.props.cloudname}
           publicId={cloudid}
-          width={width}
+          width={this.props.width}
           poster={`http://res.cloudinary.com/bouncedotcom-com/video/upload/${cloudid}.jpg`}
           autoPlay
         />
@@ -82,17 +82,51 @@ export default class Profile extends Component {
     }
   }
 
+  replaceButton() {
+    if(this.itsMe()) {
+      return (
+        <button onClick={this.upload.bind(this)}>Change Pic/Vid</button>
+      );
+    }
+    return null;
+  }
+
+  profilePic() {
+    const payload = this.props.payload;
+    if(!payload) {
+      return this.noPic();
+    }
+    const cloudid   = payload.profile_pic_id;
+    const mediatype = payload.profile_pic_type;
+    if(!cloudid) {
+      return this.noPic();
+    }
+    return (
+      <div>
+        {this.media(cloudid, mediatype)}
+        <div>
+          {this.replaceButton()}
+          <FacebookProvider appId="454994558177557">
+            <Like href={`http://www.bouncedotcom.com/twerker/${this.props.userid}`} colorScheme="dark"
+              showFaces
+              share
+              size="large"
+            />
+          </FacebookProvider>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div>
-      <div>
-        <div style={{width: '30%'}}>
-         {this.profilePic()}
-        </div>
-        <div style={{width: '70%'}}>
-
-        </div>
-      </div>
+        {this.profilePic()}
+        <BounceList
+          width={this.props.width}
+          cloudname={this.props.cloudname}
+          bounces={this.props.bounces.slice().reverse()}
+        />
       </div>
     );
   }

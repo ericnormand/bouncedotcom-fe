@@ -15,12 +15,24 @@ export function userIdFromToken(token) {
 
 export function getUserInfo(token, callback = () => null) {
   const userid = userIdFromToken(token);
+  getUser(userid, callback);
+}
 
+export function getUser(id, callback = () => null) {
   axios({
     method: 'get',
-    url: `${backend}/users/${userid}`
+    url: `${backend}/users/${id}`
   }).then((resp) => callback(null, resp.data))
     .catch((err) => callback(err));
+}
+
+export function patchUser(id, data, callback = () => null) {
+  axios({
+    method: 'patch',
+    url: `${backend}/users/${id}`,
+    data,
+  }).then((resp)=>callback(null, resp.data))
+    .catch(err=>callback(err));
 }
 
 export function createAccountPost(email, password, password_confirmation, callback = () => null) {
@@ -51,6 +63,17 @@ export function getBounces(page, callback = () => null) {
   axios({
     method: 'get',
     url: `${backend}/bounces?page=${page}`,
+  }).then((resp) => {
+    callback(null, resp);
+  }).catch((err) => {
+    callback(err)
+  });
+}
+
+export function getBounce(id, callback = () => null) {
+  axios({
+    method: 'get',
+    url: `${backend}/bounces/${id}`,
   }).then((resp) => {
     callback(null, resp);
   }).catch((err) => {

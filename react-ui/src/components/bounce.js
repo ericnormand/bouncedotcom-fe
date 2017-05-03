@@ -8,9 +8,10 @@ export default class Bounce extends Component {
   static propTypes = {
     media_type: PropTypes.string,
     width: PropTypes.number,
-    bounceid: PropTypes.string,
+    bounceid: PropTypes.number,
     updated_at: PropTypes.string,
     cloudname: PropTypes.string,
+    cloudinary: PropTypes.string,
   }
 
   constructor(props) {
@@ -23,7 +24,7 @@ export default class Bounce extends Component {
       return (
         <Image
           cloudName={this.props.cloudname}
-          publicId={this.props.bounceid}
+          publicId={this.props.cloudinary}
           width={this.props.width}
         />
       )
@@ -31,9 +32,9 @@ export default class Bounce extends Component {
       return (
         <Video
           cloudName={this.props.cloudname}
-          publicId={this.props.bounceid}
+          publicId={this.props.cloudinary}
           width={this.props.width}
-          poster={`http://res.cloudinary.com/bouncedotcom-com/video/upload/${this.props.bounceid}.jpg`}
+          poster={`http://res.cloudinary.com/bouncedotcom-com/video/upload/${this.props.cloudinary}.jpg`}
           controls
         />
       );
@@ -45,6 +46,8 @@ export default class Bounce extends Component {
       <div style={{maxWidth: 800, margin: 'auto'}}>
         {this.comp()}
         <div>
+          <a href={`/twerker/${this.props.userid}`}>TWERKER</a>
+          {' '}
           <a href={`/bounce/${this.props.bounceid}`}>LINK</a>
           <FacebookProvider appId="454994558177557">
             <Like href={`http://www.bouncedotcom.com/bounce/${this.props.bounceid}`} colorScheme="dark"
