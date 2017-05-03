@@ -42,12 +42,18 @@ export default class Bounce extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{maxWidth: 800, margin: 'auto'}}>
         {this.comp()}
-        <a href={`http://www.bouncedotcom.com/bounce/${this.props.bounceid}`}>LINK</a>
-        <FacebookProvider appId="454994558177557">
-          <Like href={`http://www.bouncedotcom.com/bounce/${this.props.bounceid}`} colorScheme="dark" showFaces share />
-        </FacebookProvider>
+        <div>
+          <a href={`/bounce/${this.props.bounceid}`}>LINK</a>
+          <FacebookProvider appId="454994558177557">
+            <Like href={`http://www.bouncedotcom.com/bounce/${this.props.bounceid}`} colorScheme="dark"
+              showFaces
+              share
+              size="large"
+            />
+          </FacebookProvider>
+        </div>
       </div>
     );
   }
