@@ -16,8 +16,8 @@ export default class BounceList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bounces: [],
-      loading: true,
+      bounces: {},
+      loading: false,
     };
   }
 
@@ -28,7 +28,7 @@ export default class BounceList extends Component {
   componentWillReceiveProps(nextProps) {
     // we need to fetch new bounces immediately after uploading
     //if (nextProps.page !== this.props.page) {
-      this.fetchBounces(nextProps.page)
+    this.fetchBounces(nextProps.page)
     //}
   }
 
@@ -36,9 +36,9 @@ export default class BounceList extends Component {
     this.setState({loading: true});
     getBounces(page, (err, resp) => {
       if (err) {
+        this.setState({loading:false});
         console.log('error', err);
       } else {
-        console.log(resp);
         this.setState({
           ...resp.data,
           loading: false,
@@ -50,7 +50,6 @@ export default class BounceList extends Component {
 
   renderItem(index, _key) {
     const bounce = this.state.bounces[index];
-    console.log(bounce);
     return (
       <div key={bounce.cloudinary_id}>
         <Bounce
