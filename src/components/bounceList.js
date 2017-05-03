@@ -19,7 +19,6 @@ export default class BounceList extends Component {
       bounces: [],
       loading: true,
     };
-
   }
 
   componentWillMount() {
@@ -27,9 +26,10 @@ export default class BounceList extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.page !== this.props.page) {
+    // we need to fetch new bounces immediately after uploading
+    //if (nextProps.page !== this.props.page) {
       this.fetchBounces(nextProps.page)
-    }
+    //}
   }
 
   fetchBounces(page) {
