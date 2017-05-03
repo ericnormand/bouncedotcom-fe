@@ -104,6 +104,8 @@ h1 {
 .link-container {
     margin: 8px 0;
     height: 4em;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .user-link,
