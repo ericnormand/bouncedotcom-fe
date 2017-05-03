@@ -13,6 +13,16 @@ export function userIdFromToken(token) {
   return user_info.user_id;
 }
 
+export function getUserInfo(token, callback = () => null) {
+  const userid = userIdFromToken(token);
+
+  axios({
+    method: 'get',
+    url: `${backend}/users/${userid}`
+  }).then((resp) => callback(null, resp.data))
+    .catch((err) => callback(err));    
+}
+
 export function createAccountPost(email, password, password_confirmation, callback = () => null) {
   const payload = {email, password, password_confirmation}
 

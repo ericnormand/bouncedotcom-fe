@@ -9,6 +9,9 @@ import BounceList from './components/bounceList'
 import UploadWidget from './components/uploadWidget'
 
 import {createAccountPost, saveToken, getBounces} from './api'
+import Profile from './components/profile'
+
+import {createAccountPost, saveToken} from './api'
 
 const cloudname = 'bouncedotcom-com';
 
@@ -160,6 +163,7 @@ class App extends Component {
         <div>
           Bounce DOT COM .com
         </div>
+        {/*<Profile token={this.state.token} cloudname={cloudname} />*/}
         <BounceList
           width={this.state.width}
           updateTime={this.state.updateTime}
