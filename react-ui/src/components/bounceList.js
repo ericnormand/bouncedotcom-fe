@@ -16,7 +16,7 @@ export default class BounceList extends Component {
 
   prevPage() {
     if (this.props.currentPage === 1) {
-      return "Prev"
+      return ""
     } else {
       return <button onClick={() => { this.props.modifyPage(this.props.currentPage - 1) }}>Prev</button>
     }

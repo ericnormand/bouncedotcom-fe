@@ -299,7 +299,7 @@ class App extends Component {
     return (
       <div className="App">
         <div>
-          Bounce DOT COM .com
+          <h1>BounceDOTCOM.com</h1>
         </div>
         {this.choose()}
         {this.me()}

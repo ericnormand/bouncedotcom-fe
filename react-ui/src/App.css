@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  font-family: 'Helvetica Neue';
+  background-color: #300555;
+  color: #fff;
 }
 
 .App-logo {
@@ -21,4 +24,15 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+h1 {
+  font-family: 'Paytone One', sans-serif;
+  text-transform: uppercase;
+  font-size: 18px;
+  letter-spacing: 1.5px;
+  font-style: italic;
+  line-height: 20px;
+  margin: 0;
+  padding: 18px 0 24px;
 }
