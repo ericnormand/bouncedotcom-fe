@@ -14,6 +14,7 @@ export default class UploadWidget extends Component {
       cloud_name: this.props.cloudname,
       upload_preset: 'default',
       tags: ['bounce'],
+      theme: 'minimal'
     },
     cb);
   }
