@@ -169,26 +169,6 @@ class App extends Component {
     return null
   }
 
-  uploadWidget() {
-    if (this.state.token) {
-      return (
-        <UploadWidget
-          cloudname={cloudname}
-          userToken={this.state.token}
-          onUpload={() => this.setState({
-              updateTime: new Date().getTime(),
-              updateBounces: true,
-              currentPage: 1,
-            })}
-        />
-      );
-    } else {
-      return (
-        <div>Please create an account or log in to upload.</div>
-      )
-    }
-  }
-
   logout() {
     if (this.state.token) {
       return (
@@ -282,30 +262,46 @@ class App extends Component {
     }
   }
 
-  me() {
+  profileIcon() {
     const userid = this.state.token && userIdFromToken(this.state.token);
     if(userid) {
       return (
-        <div style={{position:'fixed', bottom: 0, left: 0, fontSize:75}}>
-          <a href={`/twerker/${userid}`}>ME</a>
-        </div>
+        <a className="user-icon" href={`/twerker/${userid}`}></a>
       );
     }
     return null;
 
   }
 
+  uploadWidget() {
+    if (this.state.token) {
+      return (
+        <UploadWidget
+          cloudname={cloudname}
+          userToken={this.state.token}
+          onUpload={() => this.setState({
+              updateTime: new Date().getTime(),
+              updateBounces: true,
+              currentPage: 1,
+            })}
+        />
+      );
+    } else {
+      return (
+        <div>Please create an account or log in to upload.</div>
+      )
+    }
+  }
+
   render() {
     return (
       <div className="App">
-        <div>
-          Bounce DOT COM .com
-        </div>
+        <header>
+          <h1><a href="http://www.bouncedotcom.com/" style={{color:'white', textDecoration:'none'}}>BounceDOTCOM.com</a></h1>
+          {this.profileIcon()}
+        </header>
         {this.choose()}
-        {this.me()}
-        <div style={{position:'fixed', bottom: 0, right: 0}}>
-          {this.uploadWidget()}
-        </div>
+        {this.uploadWidget()}
       </div>
     );
   }
