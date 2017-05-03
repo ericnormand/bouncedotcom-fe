@@ -45,7 +45,8 @@ export default class UploadWidget extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.upload.bind(this)}>Upload</button>
+        <button onClick={this.upload.bind(this)}
+        style={{fontSize: 30, height: '2em'}}>Upload</button>
       </div>
     );
   }
