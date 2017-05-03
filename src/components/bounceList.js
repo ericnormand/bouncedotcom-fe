@@ -3,53 +3,35 @@ import PropTypes from 'prop-types';
 import ReactList from 'react-list';
 
 import Bounce from './bounce'
-import {getBounces} from '../api'
 
 export default class BounceList extends Component {
   static propTypes = {
     width: PropTypes.number,
     cloudname: PropTypes.string,
-    page: PropTypes.number,
-    onFetch: PropTypes.func,
+    bounces: PropTypes.array,
+    modifyPage: PropTypes.func,
+    currentPage: PropTypes.number,
+    loading: PropTypes.bool,
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      bounces: {},
-      loading: false,
-    };
+  prevPage() {
+    if (this.props.currentPage === 1) {
+      return "Prev"
+    } else {
+      return <button onClick={() => { this.props.modifyPage(this.props.currentPage - 1) }}>Prev</button>
+    }
   }
 
-  componentWillMount() {
-    this.fetchBounces(this.props.page)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // we need to fetch new bounces immediately after uploading
-    //if (nextProps.page !== this.props.page) {
-    this.fetchBounces(nextProps.page)
-    //}
-  }
-
-  fetchBounces(page) {
-    this.setState({loading: true});
-    getBounces(page, (err, resp) => {
-      if (err) {
-        this.setState({loading:false});
-        console.log('error', err);
-      } else {
-        this.setState({
-          ...resp.data,
-          loading: false,
-        });
-        this.props.onFetch(this.state.bounces.length)
-      }
-    });
+  nextPage() {
+    if (this.props.bounces.length < 15) {
+      return "Next"
+    } else {
+      return <button onClick={() => { this.props.modifyPage(this.props.currentPage + 1) }}>Next</button>
+    }
   }
 
   renderItem(index, _key) {
-    const bounce = this.state.bounces[index];
+    const bounce = this.props.bounces[index];
     return (
       <div key={bounce.cloudinary_id}>
         <Bounce
@@ -64,7 +46,7 @@ export default class BounceList extends Component {
   }
 
   loading() {
-    if (this.state.loading) {
+    if (this.props.loading) {
       return <div>Loading</div>;
     }
     return null
@@ -74,12 +56,14 @@ export default class BounceList extends Component {
     return (
       <div>
         {this.loading()}
+        {this.prevPage()}
         <ReactList
           itemRenderer={this.renderItem.bind(this)}
-          length={this.state.bounces.length}
+          length={this.props.bounces.length}
           type="variable"
           threshold={0}
         />
+        {this.nextPage()}
       </div>
     );
   }

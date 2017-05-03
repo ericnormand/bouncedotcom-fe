@@ -17,7 +17,6 @@ export default class Bounce extends Component {
   }
 
   render() {
-    console.log(this.props);
     if (this.props.media_type === 'image') {
       return (
         <Image

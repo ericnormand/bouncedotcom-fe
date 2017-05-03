@@ -8,7 +8,7 @@ import CreateAccountWidget from './components/createAccountWidget'
 import BounceList from './components/bounceList'
 import UploadWidget from './components/uploadWidget'
 
-import {createAccountPost, saveToken} from './api'
+import {createAccountPost, saveToken, getBounces} from './api'
 
 const cloudname = 'bouncedotcom-com';
 
@@ -44,26 +44,46 @@ class App extends Component {
       token: getToken(),
       updateTime: new Date().getTime(),
       width: Math.min(window.innerWidth, 800),
+      loading: false,
+      bounces: [],
       currentPage: 1,
-      bounceCount: 0,
     };
-
-    setInterval(() => {
-      console.log('updating');
-      this.setState({updateTime: new Date().getTime()});
-    },
-                60000);
-    window.onresize = () => {
-      this.setState({width: Math.min(window.innerWidth, 800)});
-    }
   }
 
   componentWillMount() {
+    window.onresize = () => {
+      this.setState({width: Math.min(window.innerWidth, 800)});
+    }
+
     ensureToken((err, token) => {
       if(err) {
         console.log(err);
       } else {
         this.setState({token});
+      }
+    });
+
+    this.fetchBounces(this.state)
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if ((this.state.bounces[0] && nextState.bounces[0] && this.state.bounces[0].id !== nextState.bounces[0].id) ||
+      this.state.currentPage !== nextState.currentPage) {
+      this.fetchBounces(nextState)
+    }
+  }
+
+  fetchBounces(state) {
+    this.setState({loading: true});
+    getBounces(state.currentPage, (err, resp) => {
+      if (err) {
+        this.setState({loading:false});
+        console.log('error', err);
+      } else {
+        this.setState({
+          ...resp.data,
+          loading: false,
+        });
       }
     });
   }
@@ -122,24 +142,8 @@ class App extends Component {
     }
   }
 
-  prevPage() {
-    if (this.state.currentPage === 1) {
-      return "Prev"
-    } else {
-      return <button onClick={() => {this.setState({currentPage: this.state.currentPage - 1})}}>Prev</button>
-    }
-  }
-
-  nextPage() {
-    if (this.state.bounceCount < 15) {
-      return "Next"
-    } else {
-      return <button onClick={() => {this.setState({currentPage: this.state.currentPage + 1})}}>Next</button>
-    }
-  }
-
-  updateBounceCount(bounceCount) {
-    this.setState({bounceCount})
+  modifyPage(currentPage) {
+    this.setState({currentPage})
   }
 
   render() {
@@ -148,15 +152,15 @@ class App extends Component {
         <div>
           Bounce DOT COM .com
         </div>
-        {this.prevPage()}
         <BounceList
           width={this.state.width}
           updateTime={this.state.updateTime}
           cloudname={cloudname}
-          page={this.state.currentPage}
-          onFetch={(c) => {this.updateBounceCount(c)}}
+          currentPage={this.state.currentPage}
+          bounces={this.state.bounces}
+          loading={this.state.loading}
+          modifyPage={(page) => {this.modifyPage(page)}}
         />
-        {this.nextPage()}
         <div style={{position:'fixed', bottom: 0, right: 0}}>
           {this.uploadWidget()}
         </div>
