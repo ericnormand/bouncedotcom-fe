@@ -297,7 +297,7 @@ class App extends Component {
     return (
       <div className="App">
         <header>
-          <h1>BounceDOTCOM.com</h1>
+          <h1><a href="http://www.bouncedotcom.com/" style={{color:'white', textDecoration:'none'}}>BounceDOTCOM.com</a></h1>
           {this.profileIcon()}
         </header>
         {this.choose()}
