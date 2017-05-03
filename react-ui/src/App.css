@@ -3,6 +3,11 @@ html {
     background-color: #300555;
 }
 
+body {
+  color: #fff;
+
+}
+
 .App {
   text-align: center;
   font-family: 'Helvetica Neue';
@@ -76,4 +81,39 @@ h1 {
   line-height: 20px;
   letter-spacing: .65px;
   color: #fff;
+}
+
+.bounce-list {
+  /*padding: 0 30px;*/
+}
+
+.media-container {
+  max-width: 335px;
+  margin: 30px auto;
+}
+
+.cloudinary-img,
+.cloudinary-vid {
+  max-width: 335px;
+  height: auto;
+  box-shadow: 0 8px 16px 0 rgba(106,13,185,0.20);
+  border-radius: 8px;
+}
+
+.link-container {
+  margin: 8px 0;
+}
+
+.user-link,
+.page-link {
+  text-decoration: none;
+  color: #fff;
+  letter-spacing: 1px;
+  font-size: 12px;
+  line-height: 14px;
+  padding: 5px;
+}
+
+.page-link {
+
 }
