@@ -85,7 +85,6 @@ class App extends Component {
       }
     });
 
-
     this.fetchBounces(this.state);
     this.fetchBounce();
     this.fetchTwerker();
@@ -95,7 +94,6 @@ class App extends Component {
     if ((this.state.bounces[0] && nextState.bounces[0] && this.state.bounces[0].id !== nextState.bounces[0].id) ||
         this.state.currentPage !== nextState.currentPage ||
         nextState.updateBounces) {
-
           this.setState({updateBounces: false});
           this.fetchBounces(nextState);
     }
@@ -106,7 +104,7 @@ class App extends Component {
       this.setState({loading:true});
       getUser(this.state.pageParam, (err, resp) => {
         if(err) {
-          this.setState({loading:false});
+          this.setState({loading: false});
           console.log('error', err);
         } else {
           this.setState({
@@ -225,7 +223,8 @@ class App extends Component {
         currentPage={this.state.currentPage}
         bounces={this.state.bounces}
         loading={this.state.loading}
-        modifyPage={(page) => {this.modifyPage(page)}}
+        modifyPage={(page) => { this.modifyPage(page) }}
+        paging={true}
       />
     );
   }

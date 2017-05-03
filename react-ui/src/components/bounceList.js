@@ -12,10 +12,13 @@ export default class BounceList extends Component {
     modifyPage: PropTypes.func,
     currentPage: PropTypes.number,
     loading: PropTypes.bool,
+    paging: PropTypes.bool,
   }
 
   prevPage() {
-    if (this.props.currentPage === 1) {
+    if (this.props.paging === false) {
+      return null
+    } else if (this.props.currentPage === 1) {
       return "Prev"
     } else {
       return <button onClick={() => { this.props.modifyPage(this.props.currentPage - 1) }}>Prev</button>
@@ -23,7 +26,9 @@ export default class BounceList extends Component {
   }
 
   nextPage() {
-    if (this.props.bounces.length < 15) {
+    if (this.props.paging === false) {
+      return null
+    } else if (this.props.bounces.length < 15) {
       return "Next"
     } else {
       return <button onClick={() => { this.props.modifyPage(this.props.currentPage + 1) }}>Next</button>

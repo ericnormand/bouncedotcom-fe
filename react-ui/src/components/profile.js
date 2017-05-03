@@ -120,6 +120,7 @@ export default class Profile extends Component {
           width={this.props.width}
           cloudname={this.props.cloudname}
           bounces={this.props.bounces.slice().reverse()}
+          paging={false}
         />
       </div>
     );
