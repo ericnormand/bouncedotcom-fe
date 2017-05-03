@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types';
 import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 import FacebookProvider, { Like } from 'react-facebook';
+import ReactDOM from 'react-dom';
 
 export default class Bounce extends Component {
   static propTypes = {
@@ -30,15 +31,31 @@ export default class Bounce extends Component {
       )
     } else {
       return (
+        <div style={{position:'relative'}}
+        onClick={(e)=> {
+          if(this.video) {
+            if(this.state.playing)
+              this.video.pause();
+            else
+              this.video.play()
+          }
+        }}
+        >
         <Video
-          className="cloudinary-vid"
-          cloudName={this.props.cloudname}
-          publicId={this.props.cloudinary}
-          width={this.props.width}
-          poster={`http://res.cloudinary.com/bouncedotcom-com/video/upload/${this.props.cloudinary}.jpg`}
-          controls
-          onClick={(e)=>e.target.play()}
+        className="cloudinary-vid"
+        cloudName={this.props.cloudname}
+        publicId={this.props.cloudinary}
+        width={this.props.width}
+        poster={`http://res.cloudinary.com/bouncedotcom-com/video/upload/${this.props.cloudinary}.jpg`}
+          ref={(v)=>this.video = ReactDOM.findDOMNode(v)}
+          onPlay={()=>this.setState({playing:true})}
+          onEnded={()=>this.setState({playing:false})}
+          onPause={()=>this.setState({playing:false})}
         />
+        <img style={{position:'absolute', top:0, bottom:0, right:0, left:0, margin:'auto', height:102.5, width:107,
+          display: this.state.playing ? 'none':'inline-block'}}
+          src="/assets/butt icon.png"/>
+        </div>
       );
     }
   }
