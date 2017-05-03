@@ -57,7 +57,7 @@ export default class BounceList extends Component {
 
   render() {
     return (
-      <div>
+      <div className="bounce-list">
         {this.loading()}
         {this.prevPage()}
         <ReactList

@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types';
 import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
-
 import FacebookProvider, { Like } from 'react-facebook';
 
 export default class Bounce extends Component {
@@ -19,10 +18,11 @@ export default class Bounce extends Component {
     this.state = {};
   }
 
-  comp() {
+  chooseMedia() {
     if (this.props.media_type === 'image') {
       return (
         <Image
+          className="cloudinary-img"
           cloudName={this.props.cloudname}
           publicId={this.props.cloudinary}
           width={this.props.width}
@@ -31,6 +31,7 @@ export default class Bounce extends Component {
     } else {
       return (
         <Video
+          className="cloudinary-vid"
           cloudName={this.props.cloudname}
           publicId={this.props.cloudinary}
           width={this.props.width}
@@ -43,12 +44,13 @@ export default class Bounce extends Component {
 
   render() {
     return (
-      <div style={{maxWidth: 800, margin: 'auto'}}>
-        {this.comp()}
-        <div>
-          <a href={`/twerker/${this.props.userid}`}>TWERKER</a>
+      <div className="media-container">
+        {this.chooseMedia()}
+        <div className="link-container">
+          <a className="user-link" href={`/twerker/${this.props.userid}`}>TWERKER</a>
           {' '}
-          <a href={`/bounce/${this.props.bounceid}`}>LINK</a>
+          <a className="page-link" href={`/bounce/${this.props.bounceid}`}>LINK</a>
+
           <FacebookProvider appId="454994558177557">
             <Like href={`http://www.bouncedotcom.com/bounce/${this.props.bounceid}`} colorScheme="dark"
               showFaces
@@ -56,6 +58,7 @@ export default class Bounce extends Component {
               size="large"
             />
           </FacebookProvider>
+
         </div>
       </div>
     );
