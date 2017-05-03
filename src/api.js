@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const backend = 'http://localhost:3001';
-// const backend = 'https://bouncedotcom-backend.herokuapp.com';
+// const backend = 'http://localhost:3001';
+const backend = 'https://bouncedotcom-backend.herokuapp.com';
 
 export function saveToken(token) {
   localStorage.setItem('token', token);
@@ -20,7 +20,7 @@ export function getUserInfo(token, callback = () => null) {
     method: 'get',
     url: `${backend}/users/${userid}`
   }).then((resp) => callback(null, resp.data))
-    .catch((err) => callback(err));    
+    .catch((err) => callback(err));
 }
 
 export function createAccountPost(email, password, password_confirmation, callback = () => null) {
