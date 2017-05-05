@@ -15,7 +15,7 @@ export default class UploadWidget extends Component {
       upload_preset: 'default',
       tags: ['bounce'],
       theme: 'purple',
-      max_file_size: 25000000
+      max_file_size: 95000000
     },
     cb);
   }
@@ -24,6 +24,7 @@ export default class UploadWidget extends Component {
     this.showUploadWidget((error, result) => {
       if (error) {
         console.log(error);
+        alert(error.message);
         return;
       }
       result.forEach((thing) => {
