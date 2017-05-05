@@ -42,7 +42,7 @@ app.get('/twerker/:tid', function(request, response) {
     response.render('index.html', {
       image: imageurl,
       description: "Twerkin' for the money!",
-      title: "One fabulous twerker",
+      title: "Twerker",
       type: "video.movie",
       url: `http://www.bouncedotcom.com/twerker/${request.params.tid}`,
       video: video
@@ -51,7 +51,7 @@ app.get('/twerker/:tid', function(request, response) {
     response.render('index.html', {
       image: "http://www.bouncedotcom.com/default.jpg", // TODO
       description: "Twerkin' for the money!",
-      title: "One fabulous twerker",
+      title: "Twerker",
       type: "video.movie",
       url: `http://www.bouncedotcom.com/twerker/${request.params.tid}`
     });
@@ -71,7 +71,7 @@ app.get('/bounce/:bid', function(request, response) {
     var imageurl = "http://www.bouncedotcom.com/default.jpg";
 
     var video = null;
-    
+
     if(pid && pty === 'image') {
       imageurl = `http://res.cloudinary.com/bouncedotcom-com/image/upload/${pid}.jpg`;
     }
@@ -81,8 +81,8 @@ app.get('/bounce/:bid', function(request, response) {
     }
     response.render('index.html', {
       image: imageurl,
-      description: "hello", 
-      title: "One fabulous twerker",
+      description: "Twerkin' video",
+      title: "Bounce DOT COM.com",
       type: "video.movie",
       url: `http://www.bouncedotcom.com/bounce/${request.params.bid}`,
       video: video
@@ -91,8 +91,8 @@ app.get('/bounce/:bid', function(request, response) {
     debug(err);
     response.render('index.html', {
       image: "http://www.bouncedotcom.com/default.jpg", // TODO
-      description: "yo",
-      title: "One fabulous twerker",
+      description: "Twerking Videos",
+      title: "Bounce DOT COM.com",
       type: "video.movie",
       url: `http://www.bouncedotcom.com/bounce/${request.params.bid}`
     });
