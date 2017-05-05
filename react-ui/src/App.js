@@ -279,12 +279,15 @@ class App extends Component {
         <UploadWidget
           cloudname={cloudname}
           userToken={this.state.token}
-          onUpload={() => setTimeout(() => {
-              this.setState({
-                updateTime: new Date().getTime(),
-                updateBounces: true,
-                currentPage: 1,
-              });
+          onUpload={() => {
+              this.setState({loading:true});
+              setTimeout(() => {
+                this.setState({
+                  updateTime: new Date().getTime(),
+                  updateBounces: true,
+                  currentPage: 1,
+                });
+              }
             }, 2000)
                    }
         />
