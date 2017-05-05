@@ -287,9 +287,8 @@ class App extends Component {
                   updateBounces: true,
                   currentPage: 1,
                 });
-              }
-            }, 2000)
-                   }
+              }, 2000);
+            }}
         />
       );
     } else {
