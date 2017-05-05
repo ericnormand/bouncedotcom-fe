@@ -15,7 +15,7 @@ export default class UploadWidget extends Component {
       upload_preset: 'default',
       tags: ['bounce'],
       theme: 'purple',
-      max_file_size: 95000000
+      max_file_size: 35000000
     },
     cb);
   }
