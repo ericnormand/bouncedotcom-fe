@@ -24,7 +24,9 @@ export default class UploadWidget extends Component {
     this.showUploadWidget((error, result) => {
       if (error) {
         console.log(error);
-        alert(error.message);
+        if(error.message !== "User closed widget") {
+          alert(error.message);
+        }
         return;
       }
       result.forEach((thing) => {
